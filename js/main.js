@@ -11,23 +11,22 @@ document.addEventListener('DOMContentLoaded', function() {
     initContactForm();
 });
 
-// Header scroll effect
+// Header: الشريط الأبيض ثابت دائماً — نضيف scrolled دائماً للمظهر الموحد
 function initHeader() {
     const header = document.querySelector('.header');
     if (!header) return;
     
-    const scrollThreshold = 50;
+    header.classList.add('scrolled');
     
+    const scrollThreshold = 50;
     function updateHeader() {
         if (window.scrollY > scrollThreshold) {
             header.classList.add('scrolled');
         } else {
-            header.classList.remove('scrolled');
+            header.classList.add('scrolled');
         }
     }
-    
     window.addEventListener('scroll', updateHeader);
-    updateHeader();
 }
 
 // Mobile menu toggle
