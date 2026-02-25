@@ -147,17 +147,13 @@ p {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: var(--bg-white);
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow var(--transition-normal);
+    background: transparent;
+    transition: all var(--transition-normal);
 }
 
 .header.scrolled {
+    background: var(--bg-white);
     box-shadow: var(--shadow-md);
-}
-
-.nav-link {
-    color: var(--text-dark);
 }
 
 .header.scrolled .nav-link {
@@ -179,33 +175,21 @@ p {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    flex-shrink: 0;
 }
 
-/* Logo: الكلمة فقط - إخفاء الخلفية البيضاء (mix-blend-mode) */
 .logo-img {
-    height: 72px;
+    height: 80px;
     width: auto;
-    max-width: 220px;
-    object-fit: contain;
-    object-position: left center;
     transition: all var(--transition-normal);
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-    mix-blend-mode: multiply;
 }
 
 .header.scrolled .logo-img {
-    height: 58px;
-    max-width: 180px;
+    height: 65px;
 }
 
-/* Footer: نفس التأثير - اللوجو ككلمة فقط بدون خلفية بيضاء */
 .footer-logo {
-    height: 64px;
-    max-width: 200px;
-    filter: none;
-    mix-blend-mode: multiply;
+    filter: brightness(0) invert(1);
+    height: 70px;
 }
 
 .logo-icon {
@@ -236,7 +220,7 @@ p {
 
 .nav-link {
     font-weight: 500;
-    color: var(--text-dark);
+    color: var(--text-white);
     position: relative;
     padding: 0.5rem 0;
     transition: color var(--transition-fast);
@@ -946,11 +930,6 @@ p {
 
 .footer-brand .logo {
     margin-bottom: 1.5rem;
-    display: inline-block;
-}
-
-.footer-brand .logo .footer-logo {
-    display: block;
 }
 
 .footer-brand .logo-text {
@@ -1115,14 +1094,6 @@ p {
 }
 
 @media (max-width: 768px) {
-    .logo-img {
-        height: 56px;
-        max-width: 160px;
-    }
-    .footer-logo {
-        height: 52px;
-        max-width: 160px;
-    }
     .nav-menu {
         position: fixed;
         top: 0;
