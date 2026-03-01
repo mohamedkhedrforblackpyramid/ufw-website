@@ -96,7 +96,7 @@ function initHeroSlider() {
         const contents = [
             {
                 badge: 'Installation Sector',
-                title: 'Expert <span>Electromechanical</span> Installation',
+                title: 'Expert <span>Mechanical</span> Installation',
                 description: 'Professional installation services inside heavy industrial plants including steel structures and piping work.'
             },
             {
