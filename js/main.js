@@ -95,11 +95,6 @@ function initHeroSlider() {
         
         const contents = [
             {
-                badge: 'Fabrication Sector',
-                title: 'Precise Steel <span>Fabrication</span> Solutions',
-                description: 'Fabrication of light, medium and heavy steel structures, plate work, and piping for industrial plants.'
-            },
-            {
                 badge: 'Installation Sector',
                 title: 'Expert <span>Electromechanical</span> Installation',
                 description: 'Professional installation services inside heavy industrial plants including steel structures and piping work.'
