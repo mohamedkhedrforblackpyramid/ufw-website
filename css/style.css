@@ -783,6 +783,9 @@ p {
     box-shadow: var(--shadow-sm);
     transition: all var(--transition-normal);
     border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .client-card:hover {
@@ -797,6 +800,7 @@ p {
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
+    overflow: hidden;
 }
 
 .client-logo-img {
@@ -805,6 +809,7 @@ p {
     width: auto;
     object-fit: contain;
     object-position: center;
+    display: block;
 }
 
 .client-logo-placeholder {
@@ -825,6 +830,8 @@ p {
     font-weight: 600;
     color: var(--text-dark);
     font-size: 0.9rem;
+    margin: 0;
+    padding: 0;
 }
 
 /* ===== Projects Section ===== */
@@ -1347,6 +1354,31 @@ p {
         grid-template-columns: 1fr;
     }
     
+    /* Clients section - mobile: avoid overlap */
+    .clients-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .client-card {
+        padding: 1.25rem 1rem;
+        min-height: 0;
+    }
+    .client-logo {
+        height: 64px;
+        min-height: 64px;
+        margin-bottom: 0.75rem;
+        flex-shrink: 0;
+    }
+    .client-logo-img {
+        max-height: 56px;
+        max-width: 85%;
+    }
+    .client-name {
+        margin: 0;
+        font-size: 0.85rem;
+        line-height: 1.35;
+    }
+    
     .vision-grid {
         grid-template-columns: 1fr;
     }
@@ -1399,6 +1431,23 @@ p {
     .services-grid,
     .clients-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .client-card {
+        padding: 1rem 0.75rem;
+    }
+    .client-logo {
+        height: 56px;
+        min-height: 56px;
+        margin-bottom: 0.5rem;
+    }
+    .client-logo-img {
+        max-height: 48px;
+        max-width: 80%;
+    }
+    .client-name {
+        font-size: 0.8rem;
     }
     
     .stats-grid {
