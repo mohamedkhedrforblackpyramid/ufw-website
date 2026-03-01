@@ -599,6 +599,103 @@ p {
 }
 
 /* ===== Services Section ===== */
+.services-sectors {
+    background: var(--bg-light);
+}
+
+.sectors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.sector-card {
+    background: var(--bg-white);
+    border-radius: 1.25rem;
+    padding: 2.25rem;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.sector-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--secondary-color);
+}
+
+.sector-icon {
+    width: 88px;
+    height: 88px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: all var(--transition-normal);
+}
+
+.sector-card:hover .sector-icon {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-light) 100%);
+}
+
+.sector-icon svg {
+    color: var(--text-white);
+}
+
+.sector-title {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    line-height: 1.3;
+}
+
+.sector-description {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+.sector-list {
+    list-style: none;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.sector-list li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.sector-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+}
+
+.sector-card .service-link {
+    margin-top: auto;
+}
+
+@media (max-width: 1024px) {
+    .sectors-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .services-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -694,11 +791,20 @@ p {
 }
 
 .client-logo {
-    height: 60px;
+    height: 80px;
+    min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
+}
+
+.client-logo-img {
+    max-height: 70px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+    object-position: center;
 }
 
 .client-logo-placeholder {
