@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeader();
     initMobileMenu();
     initHeroSlider();
+    initProjectGallery();
     initScrollAnimations();
     initCounterAnimation();
     initSmoothScroll();
@@ -69,18 +70,35 @@ function initHeroSlider() {
     if (slides.length === 0) return;
     
     let currentSlide = 0;
-    const slideInterval = 5000;
+    const slideInterval = 4000;
+    let autoSlide = null;
+    
+    function startAutoSlide() {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(nextSlide, slideInterval);
+    }
+    
+    function stopAutoSlide() {
+        clearInterval(autoSlide);
+        autoSlide = null;
+    }
     
     function showSlide(index) {
         slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
+            const isActive = i === index;
+            slide.classList.toggle('active', isActive);
+            
+            if (isActive) {
+                slide.style.animation = 'none';
+                void slide.offsetWidth;
+                slide.style.animation = '';
+            }
         });
         
         indicators.forEach((indicator, i) => {
             indicator.classList.toggle('active', i === index);
         });
         
-        // Update hero content based on slide
         updateHeroContent(index);
     }
     
@@ -97,21 +115,36 @@ function initHeroSlider() {
             {
                 badge: 'Installation Sector',
                 title: 'Expert <span>Mechanical</span> Installation',
-                description: 'Professional installation services inside heavy industrial plants including steel structures and piping work.'
+                description: 'Professional installation of heavy machinery, steel structures, and piping inside cement, steel, and mining plants.'
+            },
+            {
+                badge: 'Heavy Industrial Projects',
+                title: 'Large-Scale <span>Plant</span> Operations',
+                description: 'End-to-end contracting solutions for complex industrial facilities across the Kingdom of Saudi Arabia.'
+            },
+            {
+                badge: 'Structural Works',
+                title: 'Precision <span>Heavy</span> Lifting',
+                description: 'Safe erection and installation of silos, structures, and critical plant equipment using specialized cranes.'
             },
             {
                 badge: 'Maintenance Sector',
                 title: 'Industrial <span>Maintenance</span> Excellence',
-                description: 'Comprehensive maintenance activities, equipment overhaul, and shutdown services for cement and steel plants.'
+                description: 'Comprehensive maintenance, equipment overhaul, and shutdown services for cement and steel plants.'
             },
             {
-                badge: 'Safety & Scaffolding',
-                title: 'Safety First <span>Always</span>',
-                description: 'OSHA-compliant scaffolding work and comprehensive safety protocols for all industrial operations.'
+                badge: 'Shutdown Services',
+                title: 'Kiln & Plant <span>Maintenance</span>',
+                description: 'Skilled teams delivering mechanical, structural, and fabrication works during planned plant shutdowns.'
+            },
+            {
+                badge: 'Crane Operations',
+                title: 'Heavy <span>Lifting</span> Solutions',
+                description: 'Expert crane operations and heavy equipment handling for the most demanding industrial projects.'
             }
         ];
         
-        const content = contents[index];
+        const content = contents[index] || contents[0];
         const badge = heroContent.querySelector('.hero-badge');
         const title = heroContent.querySelector('.hero-title');
         const desc = heroContent.querySelector('.hero-description');
@@ -121,30 +154,86 @@ function initHeroSlider() {
         if (desc) desc.textContent = content.description;
     }
     
-    // Initialize first slide
     showSlide(0);
+    startAutoSlide();
     
-    // Auto advance slides
-    let autoSlide = setInterval(nextSlide, slideInterval);
-    
-    // Click indicators to change slide
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => {
             currentSlide = index;
             showSlide(currentSlide);
-            clearInterval(autoSlide);
-            autoSlide = setInterval(nextSlide, slideInterval);
+            startAutoSlide();
         });
     });
     
-    // Pause on hover
     const heroSection = document.querySelector('.hero');
     if (heroSection) {
-        heroSection.addEventListener('mouseenter', () => clearInterval(autoSlide));
-        heroSection.addEventListener('mouseleave', () => {
-            autoSlide = setInterval(nextSlide, slideInterval);
-        });
+        heroSection.addEventListener('mouseenter', stopAutoSlide);
+        heroSection.addEventListener('mouseleave', startAutoSlide);
     }
+}
+
+// Project image gallery lightbox
+function initProjectGallery() {
+    const galleries = document.querySelectorAll('.project-gallery');
+    if (galleries.length === 0) return;
+
+    let lightbox = document.querySelector('.project-lightbox');
+    if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.className = 'project-lightbox';
+        lightbox.innerHTML = `
+            <button class="project-lightbox-close" type="button" aria-label="Close">&times;</button>
+            <button class="project-lightbox-nav project-lightbox-prev" type="button" aria-label="Previous">&#8249;</button>
+            <img src="" alt="">
+            <button class="project-lightbox-nav project-lightbox-next" type="button" aria-label="Next">&#8250;</button>
+        `;
+        document.body.appendChild(lightbox);
+    }
+
+    const lightboxImg = lightbox.querySelector('img');
+    let currentImages = [];
+    let currentIndex = 0;
+
+    function openLightbox(images, index) {
+        currentImages = images;
+        currentIndex = index;
+        lightboxImg.src = images[index].src;
+        lightboxImg.alt = images[index].alt;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function showImage(index) {
+        currentIndex = (index + currentImages.length) % currentImages.length;
+        lightboxImg.src = currentImages[currentIndex].src;
+        lightboxImg.alt = currentImages[currentIndex].alt;
+    }
+
+    galleries.forEach((gallery) => {
+        const images = Array.from(gallery.querySelectorAll('img'));
+        images.forEach((img, index) => {
+            img.parentElement.addEventListener('click', () => openLightbox(images, index));
+        });
+    });
+
+    lightbox.querySelector('.project-lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.querySelector('.project-lightbox-prev').addEventListener('click', () => showImage(currentIndex - 1));
+    lightbox.querySelector('.project-lightbox-next').addEventListener('click', () => showImage(currentIndex + 1));
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+        if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+    });
 }
 
 // Scroll animations (simple AOS alternative)
